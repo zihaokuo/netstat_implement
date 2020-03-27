@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include "GET_IP_INFO.h"
+#include <string.h>
 
 int main(int argc, char**argv){
 		struct option opts[]={
@@ -25,18 +26,29 @@ int main(int argc, char**argv){
 
 	argc-=optind;
 	argv+=optind;
-#ifdef DEBUG
-	if(argv[0]!=NULL)
-		printf("%s\n",argv[0]);	
-	else
-		printf("no pattern");
-#endif
+
+	char filter[SIZE] = {'\0'};
+
+    switch (argc) {
+        case 0:
+            break;
+
+        default:
+            strcpy(filter, argv[0]);
+
+            for (int i = 1; i <= argc - 1; i++) {
+                strcat(filter, "[ ]+");
+                strcat(filter, argv[i]);
+            }
+            break;
+    }
+
 	if(t==1 && u==0){
-		List_Connection_INFO(0,NULL);
+		List_Connection_INFO(0,filter);
 	}else if(t==0 && u==1){
-		List_Connection_INFO(1,NULL);
+		List_Connection_INFO(1,filter);
 	}else{
-		List_Connection_INFO(2,NULL);
+		List_Connection_INFO(2,filter);
 	}
 	return 0;
 }

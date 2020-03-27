@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
+#include <regex.h>
 #include "GET_IP_INFO.h"
 #include "GET_PROGRAM_INFO.h"
 void Translate_IPv4_INFO(Connection_INFO* info, const char* line)
@@ -33,6 +34,7 @@ void Translate_IPv6_INFO(Connection_INFO* info, const char* line)
 void List_Connection_INFO(int version, const char* filter)
 {
 	char line[SIZE];
+	char Info[SIZE];
 	FILE* pf = NULL;
 	Connection_INFO connect_info;
 	if(version != UDP){
@@ -65,7 +67,21 @@ void List_Connection_INFO(int version, const char* filter)
 				strcat(Program_Info, name);	
 			}
 //			printf("%c%c%c%c", name[strlen(name)] , name[strlen(name)+1] , name[strlen(name)+2], name[strlen(name)+3]); 
-			printf("%-5s %-45s %-45s %-50s\n", "tcp", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+//			printf("%-5s %-45s %-45s %-50s\n", "tcp", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+			sprintf(Info ,"%-5s %-45s %-45s %-50s\n", "tcp", connect_info.local_IP, connect_info.rem_IP, Program_Info);		
+			switch(filter[0]) {
+    				regex_t reg;
+    				regmatch_t pmatch[1];
+				case 0:
+           			printf("%s\n", Info);
+					break;
+        		default:
+            		regcomp(&reg, filter, REG_EXTENDED);
+            		if (!regexec(&reg, Info, 1, pmatch, 0)) {
+                		printf("%s\n", Info);
+            		}
+            		break;
+			}	
 		}
 	//open the file	
 		pf = fopen("/proc/net/tcp6", "r");
@@ -91,7 +107,21 @@ void List_Connection_INFO(int version, const char* filter)
 				strcat(Program_Info, "/");
 				strcat(Program_Info, name);	
 			}
-			printf("%-5s %-45s %-45s %-50s\n", "tcp6", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+//			printf("%-5s %-45s %-45s %-50s\n", "tcp6", connect_info.local_IP, connect_info.rem_IP, Program_Info);p
+			sprintf(Info ,"%-5s %-45s %-45s %-50s\n", "tcp6", connect_info.local_IP, connect_info.rem_IP, Program_Info);		
+			switch(filter[0]) {
+    				regex_t reg;
+    				regmatch_t pmatch[1];
+				case 0:
+           			printf("%s\n", Info);
+					break;
+        		default:
+            		regcomp(&reg, filter, REG_EXTENDED);
+            		if (!regexec(&reg, Info, 1, pmatch, 0)) {
+                		printf("%s\n", Info);
+            		}
+            		break;
+			}	
 		}
 	}
 	if(version == 2)
@@ -125,7 +155,21 @@ void List_Connection_INFO(int version, const char* filter)
 				strcat(Program_Info, "/");
 				strcat(Program_Info, name);	
 			}
-			printf("%-5s %-45s %-45s %-50s\n", "udp", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+//			printf("%-5s %-45s %-45s %-50s\n", "udp", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+			sprintf(Info ,"%-5s %-45s %-45s %-50s\n", "udp", connect_info.local_IP, connect_info.rem_IP, Program_Info);		
+			switch(filter[0]) {
+    				regex_t reg;
+    				regmatch_t pmatch[1];
+				case 0:
+           			printf("%s\n", Info);
+					break;
+        		default:
+            		regcomp(&reg, filter, REG_EXTENDED);
+            		if (!regexec(&reg, Info, 1, pmatch, 0)) {
+                		printf("%s\n", Info);
+            		}
+            		break;
+			}	
 		}
 	//open the file	
 		pf = fopen("/proc/net/udp6", "r");
@@ -152,7 +196,21 @@ void List_Connection_INFO(int version, const char* filter)
 				strcat(Program_Info, "/");
 				strcat(Program_Info, name);	
 			}
-			printf("%-5s %-45s %-45s %-50s\n", "udp6", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+//			printf("%-5s %-45s %-45s %-50s\n", "udp6", connect_info.local_IP, connect_info.rem_IP, Program_Info);
+			sprintf(Info ,"%-5s %-45s %-45s %-50s\n", "udp6", connect_info.local_IP, connect_info.rem_IP, Program_Info);		
+			switch(filter[0]) {
+    				regex_t reg;
+    				regmatch_t pmatch[1];
+				case 0:
+           			printf("%s\n", Info);
+					break;
+        		default:
+            		regcomp(&reg, filter, REG_EXTENDED);
+            		if (!regexec(&reg, Info, 1, pmatch, 0)) {
+                		printf("%s\n", Info);
+            		}
+            		break;
+			}	
 		}
 	}
 }
