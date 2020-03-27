@@ -64,7 +64,7 @@ void List_Connection_INFO(int version, const char* filter)
 				strcat(Program_Info, "/");
 				strcat(Program_Info, name);	
 			}
-
+//			printf("%c%c%c%c", name[strlen(name)] , name[strlen(name)+1] , name[strlen(name)+2], name[strlen(name)+3]); 
 			printf("%-5s %-45s %-45s %-50s\n", "tcp", connect_info.local_IP, connect_info.rem_IP, Program_Info);
 		}
 	//open the file	

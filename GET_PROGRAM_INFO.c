@@ -89,14 +89,28 @@ void Find_Name(char name[], int pid, int size)
 	int len = strlen(name);
 	if(len >= 1)  
 	{ 
-		name[strlen(name) - 1] = '\0';
+		if(name[strlen(name) - 1] == '\n')
+			name[strlen(name) - 1] = '\0';
 		Parse_Name(name, strlen(name));
 	}
 	else
 		name[0] = '-';
 //	printf("%s\n", name);
     if(cmdline_fp !=NULL)
-	    fclose(cmdline_fp);
+	    fclose(cmdline_fp);	
+	name[strlen(name)] = ' ';
+	
+//	sscanf(name, "%[^ ]%[ ]%[^\n]", name);
+	
+    for (int i = 0; i < SIZE; i++) {
+        if (!(name[i] | name[i + 1])) {
+            break;
+        }
+
+        if (name[i] == '\0') {
+            name[i] = ' ';
+        }
+    }
 //	printf("1\n");
 }
 
@@ -117,10 +131,12 @@ void Parse_Name(char name[], int len){
 		}
 	}
 //	printf("Last_Slash%d", Last_Slash);
-	for(int i = Last_Slash; i < len; i++){
+	for(int i = Last_Slash; i < SIZE; i++){
 		new_name[i-Last_Slash] = name[i];
 	}
-	strcpy(name, new_name);
+	for(int i = 0; i < SIZE; i++){
+		name[i] = new_name[i];
+	}
 }
 /*
 void Find_Name(char name[], int pid, int size)
