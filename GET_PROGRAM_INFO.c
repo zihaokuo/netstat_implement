@@ -115,20 +115,20 @@ void Find_Name(char name[], int pid, int size)
 }
 
 void Parse_Name(char name[], int len){
-	int First_Space;
+//	int First_Space;
 	int Last_Slash;
 	char new_name[SIZE] = {'\0'};
 		Last_Slash = 0;
-		First_Space = 0;
+//		First_Space = 0;
 	for(int i = 0; i < len; i++)
 	{
 		if(name[i] == '/')
 			Last_Slash = i+1;
-		if(name[i] == ' ')
-		{
-			First_Space = i;	
-			break;
-		}
+//		if(name[i] == ' ')
+//		{
+//			First_Space = i;	
+//			break;
+//		}
 	}
 //	printf("Last_Slash%d", Last_Slash);
 	for(int i = Last_Slash; i < SIZE; i++){
